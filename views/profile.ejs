@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+    <title>STOCK MEDIA</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="profile">
+<div class="flex container">
+
+    <div class="page-header text-center">
+        <h1><span class="fa fa-book"></span> The Stock Media Library</h1>
+        <a href="/logout" class="btn btn-warning btn-lg">Logout</a>
+    </div>
+
+    <!--generate an image or video to save -->
+            <section class="contain">
+            <form id="mediaForm" action="profile.ejs" method="post">
+              <input id="subject" type="text" name="subject" placeholder="What are you looking for?">
+            </form>
+            <section class="btnContainer">
+              <button type="button" class="button" id="btnVideo">VIDEO</button>
+              <button type="button" class="button" id="btnPhoto">PHOTO</button>
+            </section>
+            <img id="photo" class="hide"src="">
+            <iframe id="video" class="hide" src="" width="250" height="250"></iframe>
+            <button type="button" class="hide" id="btnMore">MORE!</button>
+
+    <!--add a description before saving -->
+            <h3>Add a Note!</h3>
+            <% if (user.local.email) { %>
+            <form id="noteForm">
+            <input id="user" type="text" value="<%= user.local.email %>" name="name">
+             <input id="userInput" type="text" placeholder="write about it!" name="msg">
+            <i id="btnSave"class="fa fa-bookmark" aria-hidden="true">Save!</i>
+            </form>
+              <% } %>
+
+    </section>
+    <!-- a board of the user's saved media: response from POST request-->
+
+          <h3>SAVED MEDIA BOARD</h3>
+    <section class="saved">
+          <ul class="savedMedia">
+          <% for(var i=0; i<saved.length; i++) {%>
+            <li class="media">
+              <p><%= saved[i].name %></p>
+              <p><%= saved[i].subject %></p>
+              <% if(saved[i].vidSrc =="") {%>
+              <img id="savedImg" src=<%= "" + saved[i].imgSrc %> >
+              <% } else if (saved[i].imgSrc =="") {%>
+              <iframe id="savedVid" src=<%= "" + saved[i].vidSrc %> width="250" height="250"></iframe>
+               <% } %>
+              <p><%= saved[i].msg %></p>
+              <span><i class="fa fa-trash" aria-hidden="true"></i></span>
+            </li>
+          <% } %>
+          </ul>
+    </section>
+
+</div>
+
+<script src="main.js"></script>
+
+</body>
+</html>
